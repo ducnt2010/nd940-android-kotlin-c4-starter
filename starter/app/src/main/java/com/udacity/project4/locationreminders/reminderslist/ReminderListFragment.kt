@@ -35,7 +35,10 @@ class ReminderListFragment : BaseFragment() {
         setDisplayHomeAsUpEnabled(false)
         setTitle(getString(R.string.app_name))
 
-        binding.refreshLayout.setOnRefreshListener { _viewModel.loadReminders() }
+        binding.refreshLayout.setOnRefreshListener {
+            _viewModel.loadReminders()
+            binding.refreshLayout.isRefreshing = false
+        }
 
         return binding.root
     }
@@ -79,8 +82,9 @@ class ReminderListFragment : BaseFragment() {
 //                 add the logout implementation
                 AuthUI.getInstance().signOut(requireContext())
                     .addOnCompleteListener {
-                        if (it.isSuccessful){
-                            val intent=Intent(requireContext(),AuthenticationActivity::class.java)
+                        if (it.isSuccessful) {
+                            val intent =
+                                Intent(requireContext(), AuthenticationActivity::class.java)
                             startActivity(intent)
                             requireActivity().finish()
                         }
