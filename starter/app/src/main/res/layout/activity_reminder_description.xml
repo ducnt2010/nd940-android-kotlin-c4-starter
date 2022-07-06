@@ -25,6 +25,7 @@
             android:textSize="@dimen/text_size_medium" />
 
         <TextView
+            android:id="@+id/text_title"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="@{reminderDataItem.title}"
@@ -38,6 +39,7 @@
             android:textSize="@dimen/text_size_medium" />
 
         <TextView
+            android:id="@+id/text_description"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:textColor="@color/colorAccent"
@@ -51,6 +53,7 @@
             android:textSize="@dimen/text_size_medium" />
 
         <TextView
+            android:id="@+id/text_location"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:textColor="@color/colorAccent"
