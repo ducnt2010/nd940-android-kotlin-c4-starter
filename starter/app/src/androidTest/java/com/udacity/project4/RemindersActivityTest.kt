@@ -120,7 +120,7 @@ class RemindersActivityTest :
         val des = "DES"
         val location = "LOCATION"
         // Set initial state.
-        repository.saveReminder(ReminderDTO("TITLE", "DES", "LOCATION", 12.345, 21.321))
+        repository.saveReminder(ReminderDTO(title, des, location, 12.345, 21.321))
 
         // Start up List reminder screen.
         val activityScenario = ActivityScenario.launch(RemindersActivity::class.java)
