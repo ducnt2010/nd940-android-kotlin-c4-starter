@@ -7,7 +7,9 @@ import android.content.Intent
 import android.content.IntentSender
 import android.content.pm.PackageManager
 import android.content.res.Resources
+import android.net.Uri
 import android.os.Bundle
+import android.provider.Settings
 import android.util.Log
 import android.view.*
 import androidx.core.content.ContextCompat
@@ -21,6 +23,7 @@ import com.google.android.gms.maps.OnMapReadyCallback
 import com.google.android.gms.maps.SupportMapFragment
 import com.google.android.gms.maps.model.*
 import com.google.android.material.snackbar.Snackbar
+import com.udacity.project4.BuildConfig
 import com.udacity.project4.R
 import com.udacity.project4.base.BaseFragment
 import com.udacity.project4.base.NavigationCommand
@@ -77,7 +80,7 @@ class SelectLocationFragment : BaseFragment(), OnMapReadyCallback {
         _viewModel.latitude.value = selectedLatLng?.latitude
         _viewModel.longitude.value = selectedLatLng?.longitude
         _viewModel.selectedPOI.value = selectedPoI
-        _viewModel.reminderSelectedLocationStr.value=selectedAddress
+        _viewModel.reminderSelectedLocationStr.value = selectedAddress
         _viewModel.navigationCommand.value = NavigationCommand.Back
     }
 
@@ -146,7 +149,7 @@ class SelectLocationFragment : BaseFragment(), OnMapReadyCallback {
             )
 
             updateSelectedPosition(latLng, snippet)
-            if(!binding.saveButton.isEnabled){
+            if (!binding.saveButton.isEnabled) {
                 setSaveButtonEnable(true)
             }
         }
@@ -164,7 +167,7 @@ class SelectLocationFragment : BaseFragment(), OnMapReadyCallback {
             currentMarker = poiMarker
 
             updateSelectedPosition(poi.latLng, poi.name, poi)
-            if(!binding.saveButton.isEnabled){
+            if (!binding.saveButton.isEnabled) {
                 setSaveButtonEnable(true)
             }
         }
@@ -230,6 +233,21 @@ class SelectLocationFragment : BaseFragment(), OnMapReadyCallback {
         if (requestCode == REQUEST_LOCATION_PERMISSION) {
             if (grantResults.size > 0 && (grantResults[0] == PackageManager.PERMISSION_GRANTED)) {
                 enableMyLocation()
+            } else {
+//                _viewModel.showSnackBarInt.value = R.string.location_required_error
+                // Permission denied.
+                Snackbar.make(
+                    binding.root,
+                    R.string.permission_denied_explanation, Snackbar.LENGTH_INDEFINITE
+                )
+                    .setAction(R.string.settings) {
+                        // Displays App settings screen.
+                        startActivity(Intent().apply {
+                            action = Settings.ACTION_APPLICATION_DETAILS_SETTINGS
+                            data = Uri.fromParts("package", BuildConfig.APPLICATION_ID, null)
+                            flags = Intent.FLAG_ACTIVITY_NEW_TASK
+                        })
+                    }.show()
             }
         }
     }
