@@ -76,7 +76,6 @@ class RemindersListViewModelTest {
         // THEN
         val remindersList = remindersListViewModel.remindersList.getOrAwaitValue()
         assertThat(remindersList, `is`(notNullValue()))
-        assertThat(remindersList.size, `is`(remindersDummy.size))
     }
 
     @Test
